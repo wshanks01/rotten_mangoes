@@ -11,17 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620160303) do
+ActiveRecord::Schema.define(version: 20160621110930) do
 
-  create_table "movies", force: true do |t|
-    t.string   "title"
-    t.string   "director"
+  create_table "movies", force: :cascade do |t|
+    t.string   "title",              limit: 255
+    t.string   "director",           limit: 255
     t.integer  "runtime_in_minutes"
     t.text     "description"
-    t.string   "poster_image_url"
+    t.string   "poster_image_url",   limit: 255
     t.datetime "release_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "text"
+    t.integer  "rating_out_of_ten"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "movie_id"
+  end
+
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",           limit: 255
+    t.string   "password_digest", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "firstname",       limit: 255
+    t.string   "lastname",        limit: 255
   end
 
 end

@@ -3,6 +3,7 @@ class Movie < ActiveRecord::Base
   validates :runtime_in_minutes, numericality: {only_integer: true}
   validate :release_date_is_in_the_past
   has_many :reviews
+  mount_uploader :image, PosterImageUploader
 
   def review_average
     return 0 if reviews.size == 0

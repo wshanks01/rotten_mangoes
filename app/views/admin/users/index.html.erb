@@ -1,0 +1,13 @@
+<h1>Admin User Management<h1>
+
+<% @user.each do |user| %>
+<h2><%= user.full_name %></h2>
+<ul>
+  <li>Firstname: <%= user.firstname %></li>
+  <li>Lastname: <%= user.lastname %></li>
+  <li>Email: <%= user.email %></li>
+  <li>Admin: <%=user.admin %></li>
+</ul>
+<% end %>
+
+<%= paginate @user %>

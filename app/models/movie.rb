@@ -10,6 +10,18 @@ class Movie < ActiveRecord::Base
     reviews.sum(:rating_out_of_ten)/reviews.size
   end
 
+  def self.short_movie
+    where(['runtime_in_minutes < 90'])
+  end
+
+  def self.medium_movie
+    where(['runtime_in_minutes >= 90 AND runtime_in_minutes < 120'])
+  end
+
+  def self.length_movie
+    where(['runtime_in_minutes >= 120'])
+  end
+
   protected
   
   def release_date_is_in_the_past

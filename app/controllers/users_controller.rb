@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def admin
+
   end
 
   protected

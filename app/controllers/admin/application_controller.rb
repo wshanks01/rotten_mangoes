@@ -3,9 +3,8 @@ class Admin::ApplicationController < ActionController::Base
   private
 
   def restrict_access
-    if !current_user.admin?
-      flash[:alert] = "You must log in."
-      redirect_to new_session_path
+    if current_user && !current_user.admin?
+      redirect_to new_session_path, notice: "You must log in."
     end
   end
   

@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionController < ApplicationController
   def new
   end
 
@@ -17,4 +17,5 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to movies_path, notice: "Adios!"
   end
+
 end

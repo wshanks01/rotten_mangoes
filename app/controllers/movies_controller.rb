@@ -1,46 +1,18 @@
 class MoviesController < ApplicationController
   def index
-    search_title = params[:title]
-    search_director = params[:director]
+    search_movies = params[:search]
     @movies = Movie.all
-    if params[:title] || params[:director] || params[:length]
-      if params[:title].present?
-        @movies = @movies.where(['title LIKE ?', "%#{search_title}"])
+    if params[:title] || params[:length]
+      if params[:search].present?
+        @movies = @movies.titles_or_directors(search_movies)
       end
 
-      if params[:director].present?
-        @movies = @movies.where(['director LIKE ?', "%#{search_director}"])
-      end
-
-      if params[:length] == 1.to_s
-        @movies = @movies.where('runtime_in_minutes < 90')
-      elsif params[:length] == 2.to_s
-        @movies = @movies.where('runtime_in_minutes >= 90 OR runtime_in_minutes < 120')
-      else 
-        @movies = @movies.where('runtime_in_minutes >= 120')
+      if params[:length]
+        @movies = @movies.movie_length(params[:length])
       end
     end
   end
 
-
-  #   @movies = Movie.all
-  #   @movie_search = Movie.search({ :title => params[:title], :directo})
-  #   if params[:title] && !params[:title].empty?
-  #     @movie_search = Movie.search_title(params[:title]).all
-  #   elsif params[:director]
-  #     @movie_search = Movie.search_director(params[:director]).all
-  #   else
-  #     case params[:length].to_i
-  #     when 1
-  #       then @movie_search = Movie.short_movie
-  #     when 2
-  #       then @movie_search = Movie.medium_movie
-  #     when 3
-  #       then @movie_search = Movie.long_movie
-  #     end
-  #   end
-  # end
- 
   def show
     @movie = Movie.find(params[:id])
   end
